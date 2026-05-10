@@ -1,0 +1,26 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# MAS Baseline — Python Dependencies
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Core (always required)
+langgraph>=0.2.0
+langchain-core>=0.3.0
+python-dotenv>=1.0.0
+
+# ── LLM Provider packages (install only what you need) ───────────────────────
+
+# Anthropic (LLM_PROVIDER=anthropic)
+# pip install langchain-anthropic
+langchain-anthropic>=0.2.0
+
+# OpenAI (LLM_PROVIDER=openai)
+# pip install langchain-openai
+# langchain-openai>=0.2.0
+
+# Groq (LLM_PROVIDER=groq)
+# pip install langchain-groq
+# langchain-groq>=0.2.0
+
+# Ollama local (LLM_PROVIDER=local_ollama)
+# pip install langchain-ollama
+# langchain-ollama>=0.2.0

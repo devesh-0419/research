@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AEGIS-MAS — Attacks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/main.css" />
+  <style>
+    .attack-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 32px;
+    }
+    .attack-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .attack-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+    }
+    .attack-card.a1::before { background: var(--purple); }
+    .attack-card.a2::before { background: var(--amber); }
+    .attack-card.a3::before { background: var(--red); }
+    .attack-card:hover { border-color: var(--border-hi); }
+
+    .attack-id {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 800;
+      opacity: 0.08;
+      position: absolute;
+      top: 12px; right: 20px;
+    }
+    .attack-tag {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      margin-bottom: 12px;
+    }
+    .a1 .attack-tag { color: var(--purple); }
+    .a2 .attack-tag { color: var(--amber); }
+    .a3 .attack-tag { color: var(--red); }
+
+    .attack-name {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .attack-desc {
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .attack-target {
+      font-size: 10px;
+      padding: 4px 10px;
+      border-radius: 3px;
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+    .a1 .attack-target { background: rgba(180,124,255,0.1); color: var(--purple); }
+    .a2 .attack-target { background: rgba(255,179,0,0.1);   color: var(--amber); }
+    .a3 .attack-target { background: rgba(255,59,92,0.1);   color: var(--red); }
+
+    .attack-props {
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .attack-prop {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+    }
+    .attack-prop-key { color: var(--text-label); }
+    .attack-prop-val { color: var(--text-dim); }
+
+    .coming-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(8,12,16,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(1px);
+      border-radius: var(--radius);
+    }
+    .coming-label {
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      padding: 8px 18px;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 900px) {
+      .attack-grid { grid-template-columns: 1fr; padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">
+    <span class="brand-icon">⬡</span>
+    <span class="brand-name">AEGIS<span class="brand-sub">—MAS</span></span>
+  </div>
+  <div class="nav-links">
+    <a href="../index.html"  class="nav-link">Baseline</a>
+    <a href="attacks.html"   class="nav-link active">Attacks</a>
+    <a href="defense.html"   class="nav-link locked" title="Coming: Phase 3">Defense</a>
+  </div>
+  <div class="nav-status">
+    <span class="status-dot"></span>
+    <span class="status-label">PHASE 2</span>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-tag">PHASE 2 — ATTACK INJECTION</div>
+  <h1 class="hero-title">3 Attack<br/><em>Vectors</em></h1>
+  <p class="hero-desc">A2A Injection · Propagating Infection · Orchestrator Compromise</p>
+</header>
+
+<div class="attack-grid">
+
+  <!-- A1 -->
+  <div class="attack-card a1">
+    <div class="attack-id">A1</div>
+    <div class="attack-tag">ATTACK 01 — A2A LAYER</div>
+    <div class="attack-name">A2A Prompt Injection</div>
+    <div class="attack-desc">
+      Injects a malicious instruction directly into an A2A message envelope
+      payload. The recipient agent interprets the injected string as a system
+      instruction, bypassing normal intent parsing.
+    </div>
+    <div class="attack-target">⎋  Target: OrchestratorAgent</div>
+    <div class="attack-props">
+      <div class="attack-prop">
+        <span class="attack-prop-key">Vector</span>
+        <span class="attack-prop-val">A2A message payload</span>
+      </div>
+      <div class="attack-prop">
+        <span class="attack-prop-key">Baseline detected</span>
+        <span style="color:var(--red)">NO</span>
+      </div>
+      <div class="attack-prop">
+        <span class="attack-prop-key">Auth escalation</span>
+        <span style="color:var(--amber)">Possible</span>
+      </div>
+      <div class="attack-prop">
+        <span class="attack-prop-key">DRIFT detection</span>
+        <span style="color:var(--green)">Phase 3</span>
+      </div>
+    </div>
+    <div class="coming-overlay">
+      <div class="coming-label">ACTIVATES IN PHASE 2</div>
+    </div>
+  </div>
+
+  <!-- A2 -->
+  <div class="attack-card a2">
+    <div class="attack-id">A2</div>
+    <div class="attack-tag">ATTACK 02 — PROPAGATION</div>
+    <div class="attack-name">Propagating Infection</div>
+    <div class="attack-desc">
+      Seeds a compromised agent with a self-replicating payload that appends
+      to every subsequent message. Models Lee &amp; Tiwari (2024) LLM-to-LLM
+      prompt infection across the message bus.
+    </div>
+    <div class="attack-target">⎋  Target: DataManagerAgent</div>
+    <div class="attack-props">
+      <div class="attack-prop">
+        <span class="attack-prop-key">Vector</span>
+        <span class="attack-prop-val">MCP tool response</span>
+      </div>
+      <div class="attack-prop">
+        <span class="attack-prop-key">Baseline detected</span>
+        <span style="color:var(--green)">YES (R3)</span>
+      </div>
+      <div class="attack-prop">
+        <span class="attack-prop-key">Propagation depth</span>
+        <span style="color:var(--amber)">All downstream</span>
+      </div>
+      <div class="attack-prop">
+        <span class="attack-prop-key">CAST detection</span>
+        <span style="color:var(--green)">Phase 3</span>
+      </div>
+    </div>
+    <div class="coming-overlay">
+      <div class="coming-label">ACTIVATES IN PHASE 2</div>
+    </div>
+  </div>
+
+  <!-- A3 -->
+  <div class="attack-card a3">
+    <div class="attack-id">A3</div>
+    <div class="attack-tag">ATTACK 03 — ORCHESTRATOR</div>
+    <div class="attack-name">Orchestrator Compromise</div>
+    <div class="attack-desc">
+      Directly compromises the central OrchestratorAgent. Forces approval of
+      all auth checks regardless of policy, escalates trust_level to 2.0, and
+      injects forged auth_response messages.
+    </div>
+    <div class="attack-target">⎋  Target: OrchestratorAgent (hub)</div>
+    <div class="attack-props">
+      <div class="attack-prop">
+        <span class="attack-prop-key">Vector</span>
+        <span class="attack-prop-val">System prompt override</span>
+      </div>
+      <div class="attack-prop">
+        <span class="attack-prop-key">Baseline detected</span>
+        <span style="color:var(--green)">YES (R2+R3)</span>
+      </div>
+      <div class="attack-prop">
+        <span class="attack-prop-key">Auth escalation</span>
+        <span style="color:var(--red)">FORCED</span>
+      </div>
+      <div class="attack-prop">
+        <span class="attack-prop-key">FORGE detection</span>
+        <span style="color:var(--green)">Phase 3</span>
+      </div>
+    </div>
+    <div class="coming-overlay">
+      <div class="coming-label">ACTIVATES IN PHASE 2</div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <span>AEGIS-MAS Research · Phase 2 Attacks</span>
+  <span class="footer-sep">·</span>
+  <a href="../index.html" class="footer-link">← Baseline</a>
+  <span class="footer-sep">·</span>
+  <a href="defense.html" class="footer-link">Defense →</a>
+</footer>
+
+</body>
+</html>

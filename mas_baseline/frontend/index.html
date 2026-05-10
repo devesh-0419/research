@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AEGIS-MAS — Baseline</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+<!-- ─── NAV ─────────────────────────────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav-brand">
+    <span class="brand-icon">⬡</span>
+    <span class="brand-name">AEGIS<span class="brand-sub">—MAS</span></span>
+  </div>
+  <div class="nav-links">
+    <a href="index.html"      class="nav-link active">Baseline</a>
+    <a href="pages/attacks.html"  class="nav-link locked" title="Coming: Phase 2">Attacks</a>
+    <a href="pages/defense.html"  class="nav-link locked" title="Coming: Phase 3">Defense</a>
+  </div>
+  <div class="nav-status">
+    <span class="status-dot" id="statusDot"></span>
+    <span class="status-label" id="statusLabel">IDLE</span>
+  </div>
+</nav>
+
+<!-- ─── HERO ─────────────────────────────────────────────────────────────── -->
+<header class="hero">
+  <div class="hero-tag">PHASE 1 — BASELINE SYSTEM</div>
+  <h1 class="hero-title">5-Agent<br/><em>Multi-Agent System</em></h1>
+  <p class="hero-desc">
+    LangGraph · A2A Protocol · Mock MCP · Mutual Trust
+  </p>
+</header>
+
+<!-- ─── MAIN LAYOUT ───────────────────────────────────────────────────────── -->
+<main class="workspace">
+
+  <!-- LEFT: Query panel + Agent flow diagram -->
+  <section class="panel panel-left">
+
+    <!-- Query input -->
+    <div class="card query-card">
+      <div class="card-label">USER QUERY</div>
+      <div class="preset-queries" id="presetQueries">
+        <button class="preset" data-query="Get all users from the system">GET users</button>
+        <button class="preset" data-query="Save a new report record for Q2">WRITE record</button>
+        <button class="preset" data-query="Delete the record R001">DELETE record</button>
+        <button class="preset" data-query="Configure system admin settings">ADMIN action</button>
+      </div>
+      <div class="query-input-row">
+        <input
+          type="text"
+          id="queryInput"
+          class="query-input"
+          placeholder="or type a custom query…"
+          value="Get all users from the system"
+        />
+        <button class="run-btn" id="runBtn" onclick="runPipeline()">
+          <span class="run-icon">▶</span> RUN
+        </button>
+      </div>
+    </div>
+
+    <!-- Agent flow diagram -->
+    <div class="card flow-card">
+      <div class="card-label">AGENT PIPELINE — A2A FLOW</div>
+      <div class="flow-diagram" id="flowDiagram">
+
+        <div class="flow-node" id="node-user_facing_agent" data-agent="user_facing_agent">
+          <div class="node-icon">👤</div>
+          <div class="node-body">
+            <div class="node-name">UserFacing</div>
+            <div class="node-role">Intent Parser · Entry Point</div>
+          </div>
+          <div class="node-badge" id="badge-user_facing_agent"></div>
+        </div>
+
+        <div class="flow-arrow" id="arrow-0">
+          <div class="arrow-line"></div>
+          <div class="arrow-label">A2A: user_request</div>
+        </div>
+
+        <div class="flow-node" id="node-orchestrator_agent" data-agent="orchestrator_agent">
+          <div class="node-icon">🎯</div>
+          <div class="node-body">
+            <div class="node-name">Orchestrator</div>
+            <div class="node-role">Router · Plan Builder</div>
+          </div>
+          <div class="node-badge" id="badge-orchestrator_agent"></div>
+        </div>
+
+        <div class="flow-split">
+          <div class="split-line"></div>
+          <div class="split-branches">
+            <div class="branch branch-left">
+              <div class="branch-arrow"></div>
+              <div class="flow-arrow-sm">A2A: auth_check</div>
+              <div class="flow-node flow-node-sm" id="node-authorizer_agent" data-agent="authorizer_agent">
+                <div class="node-icon">🔑</div>
+                <div class="node-body">
+                  <div class="node-name">Authorizer</div>
+                  <div class="node-role">Policy · MCP</div>
+                </div>
+                <div class="node-badge" id="badge-authorizer_agent"></div>
+              </div>
+            </div>
+            <div class="branch branch-right">
+              <div class="branch-arrow"></div>
+              <div class="flow-arrow-sm">A2A: data_request</div>
+              <div class="flow-node flow-node-sm" id="node-data_manager_agent" data-agent="data_manager_agent">
+                <div class="node-icon">🗄</div>
+                <div class="node-body">
+                  <div class="node-name">DataManager</div>
+                  <div class="node-role">DB Ops · MCP</div>
+                </div>
+                <div class="node-badge" id="badge-data_manager_agent"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow" id="arrow-1">
+          <div class="arrow-line"></div>
+          <div class="arrow-label">state tap</div>
+        </div>
+
+        <div class="flow-node flow-node-passive" id="node-logger_agent" data-agent="logger_agent">
+          <div class="node-icon">📋</div>
+          <div class="node-body">
+            <div class="node-name">Logger</div>
+            <div class="node-role">Audit · Anomaly Check</div>
+          </div>
+          <div class="node-badge" id="badge-logger_agent"></div>
+        </div>
+
+        <div class="flow-arrow" id="arrow-2">
+          <div class="arrow-line"></div>
+          <div class="arrow-label">assemble</div>
+        </div>
+
+        <div class="flow-node flow-node-output" id="node-output">
+          <div class="node-icon">✦</div>
+          <div class="node-body">
+            <div class="node-name">Response</div>
+            <div class="node-role">Final output to user</div>
+          </div>
+        </div>
+
+      </div><!-- /flow-diagram -->
+    </div>
+
+  </section>
+
+  <!-- RIGHT: Live log + Output -->
+  <section class="panel panel-right">
+
+    <!-- Live execution log -->
+    <div class="card log-card">
+      <div class="card-label">
+        EXECUTION LOG
+        <button class="clear-btn" onclick="clearLog()">CLEAR</button>
+      </div>
+      <div class="log-stream" id="logStream">
+        <div class="log-entry log-system">
+          <span class="log-ts">00:00:00</span>
+          <span class="log-agent">SYSTEM</span>
+          <span class="log-msg">Ready. Select a query and press RUN.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- A2A Message bus -->
+    <div class="card messages-card">
+      <div class="card-label">A2A MESSAGE BUS</div>
+      <div class="messages-list" id="messagesList">
+        <div class="messages-empty">No messages yet — run a query to see A2A envelopes.</div>
+      </div>
+    </div>
+
+    <!-- Output -->
+    <div class="card output-card" id="outputCard">
+      <div class="card-label">OUTPUT</div>
+      <div class="output-body" id="outputBody">
+        <div class="output-empty">Awaiting pipeline completion…</div>
+      </div>
+      <div class="output-meta" id="outputMeta"></div>
+    </div>
+
+  </section>
+
+</main>
+
+<!-- ─── TRUST REGISTRY ────────────────────────────────────────────────────── -->
+<section class="trust-section">
+  <div class="trust-label">TRUST REGISTRY — PHASE 1 (MUTUAL FULL TRUST)</div>
+  <div class="trust-bars" id="trustBars">
+    <!-- populated by JS -->
+  </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────────────────────────────── -->
+<footer class="footer">
+  <span>AEGIS-MAS Research · Phase 1 Baseline</span>
+  <span class="footer-sep">·</span>
+  <span>LangGraph + A2A + Mock MCP</span>
+  <span class="footer-sep">·</span>
+  <span>Attacks →  <a href="pages/attacks.html" class="footer-link">Phase 2</a></span>
+</footer>
+
+<script src="js/pipeline.js"></script>
+<script src="js/ui.js"></script>
+
+</body>
+</html>

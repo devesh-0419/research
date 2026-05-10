@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AEGIS-MAS — Defense</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/main.css" />
+  <style>
+    .defense-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding: 32px;
+    }
+
+    /* AEGIS modules */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .module-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .module-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+    }
+    .module-drift::after  { background: var(--accent); }
+    .module-cast::after   { background: var(--green); }
+    .module-forge::after  { background: var(--amber); }
+    .module-trace::after  { background: var(--purple); }
+
+    .module-name {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .module-drift .module-name  { color: var(--accent); }
+    .module-cast .module-name   { color: var(--green); }
+    .module-forge .module-name  { color: var(--amber); }
+    .module-trace .module-name  { color: var(--purple); }
+
+    .module-full { font-size: 9px; letter-spacing: 0.15em; color: var(--text-dim); margin-bottom: 12px; }
+    .module-desc { font-size: 11px; color: var(--text-dim); line-height: 1.6; margin-bottom: 12px; }
+    .module-attacks {
+      font-size: 10px;
+      color: var(--text-label);
+    }
+    .module-attacks span {
+      padding: 2px 7px;
+      border-radius: 3px;
+      background: var(--bg-hover);
+      margin-right: 4px;
+      color: var(--text-dim);
+    }
+
+    .coming-banner {
+      position: absolute;
+      inset: 0;
+      background: rgba(8,12,16,0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(1px);
+      border-radius: var(--radius);
+    }
+    .coming-banner-text {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      padding: 7px 16px;
+      border-radius: 3px;
+    }
+
+    /* SOTA comparison */
+    .sota-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .sota-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+    .sota-table th {
+      padding: 10px 14px;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: var(--text-label);
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      background: rgba(0,0,0,0.2);
+      font-weight: 700;
+    }
+    .sota-table td {
+      padding: 9px 14px;
+      border-bottom: 1px solid rgba(30,45,61,0.5);
+      color: var(--text-dim);
+    }
+    .sota-table tr:last-child td { border-bottom: none; }
+    .sota-table tr:hover td { background: var(--bg-hover); }
+
+    .sota-name { color: var(--text); font-weight: 700; }
+    .sota-ours { background: rgba(0,229,255,0.04) !important; }
+    .sota-ours td { color: var(--text) !important; }
+    .sota-ours .sota-name { color: var(--accent); }
+
+    .check-yes  { color: var(--green); }
+    .check-no   { color: var(--red); opacity: 0.6; }
+    .check-part { color: var(--amber); }
+
+    .sota-note {
+      padding: 10px 16px;
+      font-size: 10px;
+      color: var(--text-label);
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 900px) {
+      .defense-layout { grid-template-columns: 1fr; padding: 16px; }
+      .modules-grid   { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">
+    <span class="brand-icon">⬡</span>
+    <span class="brand-name">AEGIS<span class="brand-sub">—MAS</span></span>
+  </div>
+  <div class="nav-links">
+    <a href="../index.html"  class="nav-link">Baseline</a>
+    <a href="attacks.html"   class="nav-link">Attacks</a>
+    <a href="defense.html"   class="nav-link active">Defense</a>
+  </div>
+  <div class="nav-status">
+    <span class="status-dot"></span>
+    <span class="status-label">PHASE 3</span>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-tag">PHASE 3 — AEGIS DEFENSE SYSTEM</div>
+  <h1 class="hero-title">AEGIS<br/><em>Defense Modules</em></h1>
+  <p class="hero-desc">DRIFT · CAST · FORGE · TRACE vs SOTA</p>
+</header>
+
+<div class="defense-layout">
+
+  <!-- LEFT: AEGIS modules -->
+  <div>
+    <div class="card-label" style="padding:10px 0 12px;font-size:9px;letter-spacing:.2em;color:var(--text-label)">
+      AEGIS DEFENSE — 4 MODULES
+    </div>
+    <div class="modules-grid">
+
+      <div class="module-card module-drift">
+        <div class="module-name">DRIFT</div>
+        <div class="module-full">SEMANTIC DRIFT DETECTOR</div>
+        <div class="module-desc">Detects semantic anomalies in A2A payloads. Catches injected instructions that are syntactically valid but semantically deviant from established agent communication patterns.</div>
+        <div class="module-attacks">Defends: <span>A1</span></div>
+        <div class="coming-banner"><div class="coming-banner-text">PHASE 3</div></div>
+      </div>
+
+      <div class="module-card module-cast">
+        <div class="module-name">CAST</div>
+        <div class="module-full">CAUSAL CHAIN ANALYSER</div>
+        <div class="module-desc">Verifies that every action in the pipeline has a valid causal predecessor. Flags actions that appear without proper authorization chain, catching propagated infections.</div>
+        <div class="module-attacks">Defends: <span>A2</span></div>
+        <div class="coming-banner"><div class="coming-banner-text">PHASE 3</div></div>
+      </div>
+
+      <div class="module-card module-forge">
+        <div class="module-name">FORGE</div>
+        <div class="module-full">SHADOW ORCHESTRATOR</div>
+        <div class="module-desc">A parallel shadow orchestrator independently validates routing decisions. Cross-references the main orchestrator's plan — divergence triggers a compromise alert.</div>
+        <div class="module-attacks">Defends: <span>A3</span></div>
+        <div class="coming-banner"><div class="coming-banner-text">PHASE 3</div></div>
+      </div>
+
+      <div class="module-card module-trace">
+        <div class="module-name">TRACE</div>
+        <div class="module-full">MERKLE CHAIN INTEGRITY</div>
+        <div class="module-desc">Merkle-chains every A2A message. Each message includes a hash of its predecessor — forged or replayed messages break the chain and are immediately detected.</div>
+        <div class="module-attacks">Defends: <span>A1</span> <span>A2</span> <span>A3</span></div>
+        <div class="coming-banner"><div class="coming-banner-text">PHASE 3</div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RIGHT: SOTA comparison table -->
+  <div>
+    <div class="card-label" style="padding:10px 0 12px;font-size:9px;letter-spacing:.2em;color:var(--text-label)">
+      SOTA COMPARISON
+    </div>
+    <div class="sota-panel">
+      <table class="sota-table">
+        <thead>
+          <tr>
+            <th>System</th>
+            <th>A2A Injection</th>
+            <th>Propagation</th>
+            <th>Orch. Compromise</th>
+            <th>LangGraph Native</th>
+            <th>LLM-free Defense</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="sota-name">AgentSafe</td>
+            <td class="check-part">Partial</td>
+            <td class="check-no">✗</td>
+            <td class="check-no">✗</td>
+            <td class="check-no">✗</td>
+            <td class="check-no">✗</td>
+          </tr>
+          <tr>
+            <td class="sota-name">TAMAS</td>
+            <td class="check-part">Partial</td>
+            <td class="check-part">Partial</td>
+            <td class="check-no">✗</td>
+            <td class="check-no">✗</td>
+            <td class="check-no">✗</td>
+          </tr>
+          <tr>
+            <td class="sota-name">PeerGuard</td>
+            <td class="check-no">✗</td>
+            <td class="check-yes">✓</td>
+            <td class="check-no">✗</td>
+            <td class="check-no">✗</td>
+            <td class="check-part">Partial</td>
+          </tr>
+          <tr>
+            <td class="sota-name">SentinelNet</td>
+            <td class="check-part">Partial</td>
+            <td class="check-yes">✓</td>
+            <td class="check-part">Partial</td>
+            <td class="check-no">✗</td>
+            <td class="check-no">✗</td>
+          </tr>
+          <tr>
+            <td class="sota-name">G-Safeguard</td>
+            <td class="check-yes">✓</td>
+            <td class="check-part">Partial</td>
+            <td class="check-no">✗</td>
+            <td class="check-no">✗</td>
+            <td class="check-no">✗</td>
+          </tr>
+          <tr class="sota-ours">
+            <td class="sota-name">⬡ AEGIS (Ours)</td>
+            <td class="check-yes">✓ DRIFT</td>
+            <td class="check-yes">✓ CAST</td>
+            <td class="check-yes">✓ FORGE</td>
+            <td class="check-yes">✓</td>
+            <td class="check-yes">✓</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="sota-note">
+        AEGIS is the only system with native LangGraph implementation and LLM-free defense modules (DRIFT, CAST, FORGE, TRACE). Results will be populated with actual detection rates in Phase 3.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <span>AEGIS-MAS Research · Phase 3 Defense</span>
+  <span class="footer-sep">·</span>
+  <a href="attacks.html" class="footer-link">← Attacks</a>
+  <span class="footer-sep">·</span>
+  <span>DRIFT · CAST · FORGE · TRACE</span>
+</footer>
+
+</body>
+</html>

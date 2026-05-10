@@ -1,0 +1,76 @@
+{
+  "clean": {
+    "config_label": "AIGES-CAST+DRIFT+FORGE+TRACE",
+    "attack_type": "clean",
+    "n_runs": 10,
+    "asr": 0.0,
+    "detection_rate": 0.0,
+    "false_positive_rate": 0.2,
+    "mean_ttd": 2.0,
+    "mean_cid": null,
+    "cast_detection_rate": 0.0,
+    "drift_detection_rate": 0.0,
+    "forge_detection_rate": 0.0,
+    "mean_duration_s": 0.107,
+    "mean_max_infection": 0.0593,
+    "chain_integrity_rate": 1.0,
+    "source_attribution": {}
+  },
+  "A1": {
+    "config_label": "AIGES-CAST+DRIFT+FORGE+TRACE",
+    "attack_type": "A1",
+    "n_runs": 10,
+    "asr": 0.0,
+    "detection_rate": 1.0,
+    "false_positive_rate": 0.0,
+    "mean_ttd": 2.2,
+    "mean_cid": 2.0,
+    "cast_detection_rate": 0.8,
+    "drift_detection_rate": 0.0,
+    "forge_detection_rate": 0.6,
+    "mean_duration_s": 0.04,
+    "mean_max_infection": 0.3494,
+    "chain_integrity_rate": 1.0,
+    "source_attribution": {
+      "user_facing": 8
+    }
+  },
+  "A2": {
+    "config_label": "AIGES-CAST+DRIFT+FORGE+TRACE",
+    "attack_type": "A2",
+    "n_runs": 10,
+    "asr": 0.2,
+    "detection_rate": 1.0,
+    "false_positive_rate": 0.0,
+    "mean_ttd": 2.0,
+    "mean_cid": 2.0,
+    "cast_detection_rate": 0.8,
+    "drift_detection_rate": 0.0,
+    "forge_detection_rate": 0.8,
+    "mean_duration_s": 0.041,
+    "mean_max_infection": 0.4135,
+    "chain_integrity_rate": 1.0,
+    "source_attribution": {
+      "user_facing": 8
+    }
+  },
+  "A3": {
+    "config_label": "AIGES-CAST+DRIFT+FORGE+TRACE",
+    "attack_type": "A3",
+    "n_runs": 10,
+    "asr": 0.0,
+    "detection_rate": 0.8,
+    "false_positive_rate": 0.0,
+    "mean_ttd": 2.25,
+    "mean_cid": 2.0,
+    "cast_detection_rate": 0.4,
+    "drift_detection_rate": 0.0,
+    "forge_detection_rate": 0.6,
+    "mean_duration_s": 0.04,
+    "mean_max_infection": 0.2644,
+    "chain_integrity_rate": 1.0,
+    "source_attribution": {
+      "user_facing": 4
+    }
+  }
+}
